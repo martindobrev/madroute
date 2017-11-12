@@ -1,0 +1,32 @@
+<p>
+  route-detail works!
+</p>
+
+<p>Map:</p>
+<aol-map [width]="'500px'" [height]="'300'">
+    <aol-interaction-default></aol-interaction-default>
+  <aol-view [zoom]="2">
+      <aol-coordinate [x]="5.795122" [y]="45.210225" [srid]="'EPSG:4326'"></aol-coordinate>
+  </aol-view>
+  <aol-layer-tile>
+      <aol-source-osm></aol-source-osm>
+  </aol-layer-tile>
+  <aol-layer-vector *ngIf="route !== undefined" [opacity]="0.7">
+		<aol-source-vector *ngIf="route.gpsCoordinates.length > 0">
+			<aol-feature *ngFor="let p of route.gpsCoordinates">
+				<aol-geometry-point>
+					<aol-coordinate [x]="p.lon" [y]="p.lat" [srid]="'EPSG:4326'"></aol-coordinate>
+				</aol-geometry-point>
+				<aol-style>
+					<aol-style-circle [radius]="5">
+						<aol-style-stroke [color]="'black'" [width]="width"></aol-style-stroke>
+						<aol-style-fill [color]="'green'"></aol-style-fill>
+					</aol-style-circle>
+				</aol-style>
+			</aol-feature>
+		</aol-source-vector>
+	</aol-layer-vector>
+</aol-map>
+
+
+<p *ngFor="let p of route.gpsCoordinates">0 {{p.lat}}</p>
