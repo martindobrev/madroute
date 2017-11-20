@@ -1,11 +1,11 @@
 import { MadRoute } from './../domain/madroute';
-import { GpsPosition } from './../domain/gpsposition'; 
+import { GpsPosition } from './../domain/gpsposition';
 
-let dummyRoute = new MadRoute();
+const dummyRoute = new MadRoute();
 dummyRoute.id = 1;
-dummyRoute.location = "Dummyland";
-dummyRoute.name = "My first dummy route";
-dummyRoute.videoUrl = "Place some Dummy VIDEO URL to embed here";
+dummyRoute.location = 'Dummyland';
+dummyRoute.name = 'My first dummy route';
+dummyRoute.videoUrl = 'Place some Dummy VIDEO URL to embed here';
 dummyRoute.gpsCoordinates = [
     new GpsPosition(42.623924, 23.367762, 0.0, 12.17, 133446.17),
     new GpsPosition(42.623928, 23.367699, 0.0, 9.73, 133447.19),
