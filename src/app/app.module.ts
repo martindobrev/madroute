@@ -8,13 +8,15 @@ import { HomeComponent } from './home/home.component';
 import { RouteDetailComponent } from './route-detail/route-detail.component';
 
 import { MadRouteService } from './mad-route.service';
+import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    RouteDetailComponent
+    RouteDetailComponent,
+    YoutubePlayerComponent
   ],
   imports: [
     BrowserModule,
