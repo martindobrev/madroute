@@ -8,12 +8,12 @@ export class MadRouteService {
 
   constructor() { }
 
-  getMadRoutes() : MadRoute[] {
+  getMadRoutes(): MadRoute[] {
     return MAD_ROUTES;
   }
 
-  getMadRouteById(id: number) : MadRoute {
-    for (var i = 0; i < MAD_ROUTES.length; i++) {
+  getMadRouteById(id: number): MadRoute {
+    for (let i = 0; i < MAD_ROUTES.length; i++) {
       if (MAD_ROUTES[i].id === id) {
         return MAD_ROUTES[i];
       }
@@ -21,8 +21,8 @@ export class MadRouteService {
     return null;
   }
 
-  getRouteBoundingBox(route: MadRoute) : BBox {
-    let bbox = new BBox(500, 500, -500, -500);
+  getRouteBoundingBox(route: MadRoute): BBox {
+    const bbox = new BBox(500, 500, -500, -500);
     route.gpsCoordinates.forEach(gpsPosition => {
       if (gpsPosition.lat < bbox.minLat) {
         bbox.minLat = gpsPosition.lat;
@@ -38,5 +38,11 @@ export class MadRouteService {
       }
     });
     return bbox;
+  }
+
+  getOffsetFromBeginningByIndex(route: MadRoute, index: number): number {
+    const startTime = route.gpsCoordinates[0].time;
+    const timeAtIndex = route.gpsCoordinates[index].time;
+    return Math.abs(timeAtIndex - startTime);
   }
 }
