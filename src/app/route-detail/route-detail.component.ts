@@ -87,7 +87,7 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
       view: this.view
     });
 
-    this.currentPositionFeature = new ol.Feature(new ol.geom.Point(this.olCoordinates[0]);
+    this.currentPositionFeature = new ol.Feature(new ol.geom.Point(this.olCoordinates[0]));
     this.currentPositionFeature.setStyle(this.currentPositionStyle);
     this.foregroundVectorSource.addFeature(this.currentPositionFeature);
 
