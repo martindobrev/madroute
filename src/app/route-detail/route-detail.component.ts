@@ -23,6 +23,7 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
   vectorSource: any;
   route: MadRoute;
   initialBbox: BBox;
+  currentPositionFeature: any;
 
   private olCoordinates: Array<Array<number>> = [];
   constructor(private activatedRoute: ActivatedRoute, private location: Location, private madRouteService: MadRouteService) {}
@@ -68,10 +69,13 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
       view: this.view
     });
 
+    this.currentPositionFeature = new ol.Feature(new ol.geom.Point(this.olCoordinates[0]));
+    this.vectorSource.addFeature(this.currentPositionFeature);
+
     this.addRouteLine(this.route.gpsCoordinates);
-    this.olCoordinates.forEach((olCoordinate, index) => {
-      this.addOlPoint(olCoordinate, index);
-    });
+    // this.olCoordinates.forEach((olCoordinate, index) => {
+    //  this.addOlPoint(olCoordinate, index);
+    //});
 
     let t = this;
     this.map.on('click', function(evt) {
@@ -120,5 +124,11 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
         ol.proj.transform([gpsPosition.lon, gpsPosition.lat], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
     });
     return transformedPositions;
+  }
+
+  onPlayerTimeChanged(index: number) {
+    if (index < this.olCoordinates.length) {
+      this.currentPositionFeature.getGeometry().setCoordinates(this.olCoordinates[index]);
+    }
   }
 }

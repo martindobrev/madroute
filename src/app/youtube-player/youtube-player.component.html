@@ -1,2 +1,14 @@
 <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
 <div #player id="player"></div>
+
+<div class="container">
+  <button class="uk-button" [disabled]="videoIsPlaying" type="button" (click)="playVideo()">play</button>
+  <button class="uk-button" [disabled]="!videoIsPlaying" type="button" (click)="stopVideo()">stop</button>
+  <button class="uk-button" [disabled]="!videoIsPlaying" type="button" (click)="pauseVideo()">pause</button>
+</div>
+
+<div class="container">
+  <h3>Video information</h3>
+  <p>Duration: {{duration}}</p>
+  <p>Current position: {{currentPlayerTime}}</p>
+</div>
