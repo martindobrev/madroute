@@ -1,14 +1,16 @@
-import { Component, Input, Output, OnInit, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnChanges, SimpleChange, OnInit, AfterViewInit,
+  ViewChild, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-youtube-player',
   templateUrl: './youtube-player.component.html',
   styleUrls: ['./youtube-player.component.css']
 })
-export class YoutubePlayerComponent implements OnInit, AfterViewInit {
+export class YoutubePlayerComponent implements OnInit, AfterViewInit, OnChanges {
 
   @ViewChild('player') playerElement: ElementRef;
   @Input() videoId: string;
+  @Input() videoPosition: number;
   @Output() onPlayerTimeChange = new EventEmitter<number>();
 
   player: any;
@@ -23,8 +25,8 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     (<any>window).onYouTubeIframeAPIReady = () => {
       this.player = new (<any>window).YT.Player('player', {
-        height: '390px',
-        width: '600px',
+        height: '240px',
+        width: '320px',
         videoId: this.videoId,
         playerVars: {'autoplay': 0, 'rel': 0, 'controls': 2},
         events: {
@@ -62,6 +64,20 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit {
     };
   }
 
+  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+    console.log('ON CHANGES');
+    if (changes['videoPosition']) {
+      const newVideoPosition = changes['videoPosition'];
+      if (!newVideoPosition.isFirstChange()) {
+        this.stopVideo();
+        if (newVideoPosition.currentValue !== this.currentPlayerTime) {
+          this.currentPlayerTime = newVideoPosition.currentValue;
+          this.seekTo(this.currentPlayerTime);
+        }
+      }
+    }
+  }
+
   ngAfterViewInit() {
     const doc = (<any>window).document;
     const playerApiScript = doc.createElement('script');
@@ -80,6 +96,10 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit {
 
   pauseVideo() {
     this.player.pauseVideo();
+  }
+
+  seekTo(second: number) {
+    this.player.seekTo(second);
   }
 
   startTimer() {
