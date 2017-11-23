@@ -1,25 +1,16 @@
 <div class="uk-container uk-container-center uk-margin-top uk-margin-large-bottom">
 
   <nav class="uk-navbar uk-margin-large-bottom">
-    <a class="uk-navbar-brand uk-hidden-small" href="layouts_frontpage.html">Brand</a>
+    <a class="uk-navbar-brand uk-hidden-small" routerLink="/">MadRoutes</a>
     <ul class="uk-navbar-nav uk-hidden-small">
-      <li class="uk-active">
-        <a href="layouts_frontpage.html">Frontpage</a>
+      <li routerLinkActive="uk-active">
+        <a routerLink="/home">Home</a>
       </li>
-      <li>
-        <a href="layouts_portfolio.html">Portfolio</a>
+      <li routerLinkActive="uk-active">
+        <a routerLink="/routes">Routes</a>
       </li>
-      <li>
-        <a href="layouts_blog.html">Blog</a>
-      </li>
-      <li>
-        <a href="layouts_documentation.html">Documentation</a>
-      </li>
-      <li>
-        <a href="layouts_contact.html">Contact</a>
-      </li>
-      <li>
-        <a href="layouts_login.html">Login</a>
+      <li routerLinkActive="uk-active">
+        <a routerLink="/about">About</a>
       </li>
     </ul>
     <a href="#offcanvas" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas=""></a>

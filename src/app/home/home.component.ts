@@ -1,21 +1,11 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { MadRouteService} from './../mad-route.service'
-import { MadRoute } from './../domain/madroute';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
-
-  routes : MadRoute[];
-
-  constructor(private madRouteService: MadRouteService) { }
-
-  ngOnInit() {
-    this.routes = this.madRouteService.getMadRoutes();
-  }
-  
+export class HomeComponent {
+  constructor() {}
 }

@@ -9,6 +9,8 @@ import { RouteDetailComponent } from './route-detail/route-detail.component';
 
 import { MadRouteService } from './mad-route.service';
 import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
+import { AboutComponent } from './about/about.component';
+import { RouteListComponent } from './route-list/route-list.component';
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import { YoutubePlayerComponent } from './youtube-player/youtube-player.componen
     AppComponent,
     HomeComponent,
     RouteDetailComponent,
-    YoutubePlayerComponent
+    YoutubePlayerComponent,
+    AboutComponent,
+    RouteListComponent
   ],
   imports: [
     BrowserModule,
