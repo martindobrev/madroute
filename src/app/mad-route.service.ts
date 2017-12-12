@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 import { MadRoute } from './domain/madroute';
 import { MAD_ROUTES } from './mock/madroutes';
 import { BBox } from './domain/bbox';
@@ -6,10 +9,10 @@ import { BBox } from './domain/bbox';
 @Injectable()
 export class MadRouteService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getMadRoutes(): MadRoute[] {
-    return MAD_ROUTES;
+  getMadRoutes(): Observable<MadRoute[]> {
+    return this.http.get<MadRoute[]>("api/routes");
   }
 
   getMadRouteById(id: number): MadRoute {
