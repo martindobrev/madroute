@@ -6,7 +6,7 @@ dummyRoute.id = 1;
 dummyRoute.location = 'Dummyland';
 dummyRoute.name = 'My first dummy route';
 dummyRoute.videoUrl = 'Place some Dummy VIDEO URL to embed here';
-dummyRoute.gpsCoordinates = [
+dummyRoute.gpsData = [
     new GpsPosition(42.623924, 23.367762, 0.0, 12.17, 133446.17),
     new GpsPosition(42.623928, 23.367699, 0.0, 9.73, 133447.19),
     new GpsPosition(42.623913, 23.367632, 0.0, 9.08, 133448.19),
@@ -77,7 +77,7 @@ realRoute.id = 2;
 realRoute.location = 'Sofia, Bulgaria';
 realRoute.name = 'Climbing Vitosha on a bike :)';
 realRoute.videoUrl = '1savMPQRWvg';
-realRoute.gpsCoordinates = [
+realRoute.gpsData = [
     new GpsPosition(42.6574, 23.284586, 0.0, 0.01, 135645.0),
     new GpsPosition(42.6574, 23.284586, 0.0, 0.0, 135646.0),
     new GpsPosition(42.6574, 23.284586, 0.0, 0.01, 135647.0),

@@ -33,7 +33,20 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const id = +this.activatedRoute.snapshot.paramMap.get('id');
-    this.route = this.madRouteService.getMadRouteById(id);
+    this.madRouteService.getMadRouteById(id).subscribe(route => {
+      this.route = route;
+      this.initMap();
+    });
+  }
+
+  
+  ngAfterViewInit() {
+    this.map.setTarget(this.mapElement.nativeElement.id);
+    const boundingExtent = ol.proj.transformExtent(this.initialBbox.toExtent(), ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+    this.view.fit(boundingExtent, this.map.getSize());
+  }
+
+  private initMap() {
     this.olCoordinates = this.transformRouteCoordinates(this.route);
     this.initialBbox = this.madRouteService.getRouteBoundingBox(this.route);
     this.backgroundVectorSource = new ol.source.Vector({});
@@ -91,7 +104,7 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
     this.currentPositionFeature.setStyle(this.currentPositionStyle);
     this.foregroundVectorSource.addFeature(this.currentPositionFeature);
 
-    this.addRouteLine(this.route.gpsCoordinates);
+    this.addRouteLine(this.route.gpsData);
     this.olCoordinates.forEach((olCoordinate, index) => {
       this.addOlPoint(olCoordinate, index);
     });
@@ -110,12 +123,6 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
         console.log(t.madRouteService.getOffsetFromBeginningByIndex(t.route, feature.index));
       }
     });
-  }
-
-  ngAfterViewInit() {
-    this.map.setTarget(this.mapElement.nativeElement.id);
-    const boundingExtent = ol.proj.transformExtent(this.initialBbox.toExtent(), ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
-    this.view.fit(boundingExtent, this.map.getSize());
   }
 
   private addRoutePoint(gpsPosition: GpsPosition) {
@@ -140,7 +147,7 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
 
   private transformRouteCoordinates(route: MadRoute): Array<Array<number>> {
     const transformedPositions = [];
-    route.gpsCoordinates.forEach(gpsPosition => {
+    route.gpsData.forEach(gpsPosition => {
       transformedPositions.push(
         ol.proj.transform([gpsPosition.lon, gpsPosition.lat], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
     });

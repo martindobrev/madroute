@@ -5,5 +5,5 @@ export class MadRoute {
     name: string;
     location: string;
     videoUrl: string;
-    gpsCoordinates: GpsPosition[]
+    gpsData: GpsPosition[]
 }

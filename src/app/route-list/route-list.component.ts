@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MadRouteService} from './../mad-route.service';
 import { MadRoute } from './../domain/madroute';
+import { MadRouteCollectionResponse } from './../api/mad-route-collection-response';
 
 
 @Component({
@@ -15,6 +16,6 @@ export class RouteListComponent implements OnInit {
   constructor(private madRouteService: MadRouteService) { }
 
   ngOnInit() {
-    this.madRouteService.getMadRoutes().subscribe(routes => this.routes = routes);
+    this.madRouteService.getMadRoutes().subscribe(response => this.routes = response.madRoutes);
   }
 }
