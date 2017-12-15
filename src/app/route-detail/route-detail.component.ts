@@ -29,24 +29,16 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
   private currentPositionStyle: any;
 
   private olCoordinates: Array<Array<number>> = [];
-  constructor(private ref: ChangeDetectorRef, private activatedRoute: ActivatedRoute, private location: Location, private madRouteService: MadRouteService) {}
+  constructor(private ref: ChangeDetectorRef,
+    private activatedRoute: ActivatedRoute, private location: Location,
+    private madRouteService: MadRouteService) {
+      this.activatedRoute.data.subscribe((data: { madRoute: MadRoute }) => {
+        console.log('MAD ROUTE IN CONSTRUCTOR IS: ' + data.madRoute);
+        this.route = data.madRoute;
+      });
+    }
 
   ngOnInit() {
-    const id = +this.activatedRoute.snapshot.paramMap.get('id');
-    this.madRouteService.getMadRouteById(id).subscribe(route => {
-      this.route = route;
-      this.initMap();
-    });
-  }
-
-  
-  ngAfterViewInit() {
-    this.map.setTarget(this.mapElement.nativeElement.id);
-    const boundingExtent = ol.proj.transformExtent(this.initialBbox.toExtent(), ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
-    this.view.fit(boundingExtent, this.map.getSize());
-  }
-
-  private initMap() {
     this.olCoordinates = this.transformRouteCoordinates(this.route);
     this.initialBbox = this.madRouteService.getRouteBoundingBox(this.route);
     this.backgroundVectorSource = new ol.source.Vector({});
@@ -125,8 +117,16 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.map.setTarget(this.mapElement.nativeElement.id);
+    const boundingExtent = ol.proj.transformExtent(this.initialBbox.toExtent(), ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+    this.view.fit(boundingExtent, this.map.getSize());
+  }
+
   private addRoutePoint(gpsPosition: GpsPosition) {
-    const transformedPosition = ol.proj.transform([gpsPosition.lon, gpsPosition.lat], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+    const transformedPosition = ol.proj.transform(
+      [gpsPosition.longitude, gpsPosition.latitude],
+      ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
     this.backgroundVectorSource.addFeature(new ol.Feature(new ol.geom.Point(transformedPosition)));
   }
 
@@ -140,7 +140,7 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
     const transformedPositions = [[]];
     gpsCoordinates.forEach(gpsPosition => {
       transformedPositions[0].push(
-        ol.proj.transform([gpsPosition.lon, gpsPosition.lat], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
+        ol.proj.transform([gpsPosition.longitude, gpsPosition.latitude], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
     });
     this.backgroundVectorSource.addFeature(new ol.Feature(new ol.geom.MultiLineString(transformedPositions)));
   }
@@ -149,7 +149,7 @@ export class RouteDetailComponent implements OnInit, AfterViewInit {
     const transformedPositions = [];
     route.gpsData.forEach(gpsPosition => {
       transformedPositions.push(
-        ol.proj.transform([gpsPosition.lon, gpsPosition.lat], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
+        ol.proj.transform([gpsPosition.longitude, gpsPosition.latitude], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
     });
     return transformedPositions;
   }

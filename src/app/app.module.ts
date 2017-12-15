@@ -11,6 +11,7 @@ import { MadRouteService } from './mad-route.service';
 import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
 import { AboutComponent } from './about/about.component';
 import { RouteListComponent } from './route-list/route-list.component';
+import { MadRouteResolver } from './resolvers/mad-route.resolver.service';
 
 
 @NgModule({
@@ -27,7 +28,7 @@ import { RouteListComponent } from './route-list/route-list.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [MadRouteService],
+  providers: [MadRouteService, MadRouteResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

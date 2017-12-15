@@ -1,3 +1,3 @@
 export class GpsPosition {
-    constructor(public lat: number, public lon: number, public alt: number, public vel: number, public time: number) {}
+    constructor(public latitude: number, public longitude: number, public altitude: number, public velocity: number, public time: number) {}
 }
