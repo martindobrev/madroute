@@ -5,7 +5,7 @@ const dummyRoute = new MadRoute();
 dummyRoute.id = 1;
 dummyRoute.location = 'Dummyland';
 dummyRoute.name = 'My first dummy route';
-dummyRoute.videoUrl = 'Place some Dummy VIDEO URL to embed here';
+dummyRoute.videoId = 'Place some Dummy VIDEO URL to embed here';
 dummyRoute.gpsData = [
     new GpsPosition(42.623924, 23.367762, 0.0, 12.17, 133446.17),
     new GpsPosition(42.623928, 23.367699, 0.0, 9.73, 133447.19),
@@ -70,13 +70,13 @@ dummyRoute.gpsData = [
     new GpsPosition(42.62404, 23.3637, 0.0, 11.84, 133547.0),
     new GpsPosition(42.624043, 23.36363, 0.0, 11.81, 133548.0),
     new GpsPosition(42.624046, 23.363558, 0.0, 11.77, 133549.0),
-]
+];
 
 const realRoute = new MadRoute();
 realRoute.id = 2;
 realRoute.location = 'Sofia, Bulgaria';
 realRoute.name = 'Climbing Vitosha on a bike :)';
-realRoute.videoUrl = '1savMPQRWvg';
+realRoute.videoId = '1savMPQRWvg';
 realRoute.gpsData = [
     new GpsPosition(42.6574, 23.284586, 0.0, 0.01, 135645.0),
     new GpsPosition(42.6574, 23.284586, 0.0, 0.0, 135646.0),
@@ -1840,7 +1840,7 @@ realRoute.gpsData = [
     new GpsPosition(42.644257, 23.237043, 0.0, 5.54, 142616.0),
     new GpsPosition(42.644238, 23.237003, 0.0, 5.73, 142617.0),
     new GpsPosition(42.644222, 23.236963, 0.0, 5.75, 142618.0)
-]
+];
 
 
 export const MAD_ROUTES = [dummyRoute, realRoute];
