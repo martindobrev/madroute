@@ -6,4 +6,6 @@ export class MadRoute {
     location: string;
     videoId: string;
     gpsData: GpsPosition[];
+    duration: number;
+    distance: number;
 }

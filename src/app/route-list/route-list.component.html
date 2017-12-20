@@ -1,9 +1,17 @@
 
-<h2>Available routes</h2>
-<div class="uk-grid" data-uk-grid-margin="">
+<div class="uk-grid data-uk-grid-margin">
   <div *ngFor="let route of routes" class="uk-width-medium-1-2">
-    <h1>{{route.name}}</h1>
-    <h2>Location: {{route.location}}</h2>
-    <a class="uk-button uk-button-primary" href="/route/{{route.id}}">Check it out</a>
+    <div class="uk-panel uk-panel-box uk-panel-divider">
+        <article class="uk-article">
+            <h3 class="uk-article-title">{{route.name}}</h3>
+            <p class="uk-article-meta">Location: {{route.location}}</p>
+            <p class="uk-article-lead">{{route.description}}</p>
+            <span class="uk-text-primary">Distance: {{route.distance | number:'1.0-0'}} m</span><br/>
+            <span class="uk-text-primary">Duration: {{route.duration }} s</span>
+            <p>
+              <a class="uk-button uk-button-primary" href="/route/{{route.id}}">View</a>
+            </p>
+        </article>
+    </div>
   </div>
 </div>

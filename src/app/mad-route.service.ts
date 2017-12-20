@@ -14,11 +14,11 @@ export class MadRouteService {
   constructor(private http: HttpClient) { }
 
   getMadRoutes(): Observable<MadRouteCollectionResponse> {
-    return this.http.get<MadRouteCollectionResponse>('api/routes');
+    return this.http.get<MadRouteCollectionResponse>('api/v1/routes');
   }
 
   getMadRouteById(id: number): Observable<MadRoute> {
-    return this.http.get<MadRoute>(`api/route/${id}`);
+    return this.http.get<MadRoute>(`api/v1/route/${id}`);
   }
 
   getRouteBoundingBox(route: MadRoute): BBox {
