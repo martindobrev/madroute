@@ -5,6 +5,7 @@ import { RouteDetailComponent } from './route-detail/route-detail.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { RouteListComponent } from './route-list/route-list.component';
+import { CreateRouteComponent } from './create-route/create-route.component';
 import { MadRouteResolver } from './resolvers/mad-route.resolver.service';
 
 const routes: Routes = [
@@ -18,7 +19,8 @@ const routes: Routes = [
     }
   },
   { path: 'about', component: AboutComponent },
-  { path: '', redirectTo: '/home', pathMatch: 'full' }
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'routes/new', component: CreateRouteComponent }
 ];
 
 @NgModule({
