@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { MadRoute } from './domain/madroute';
@@ -44,5 +45,11 @@ export class MadRouteService {
     const startTime = route.gpsData[0].time;
     const timeAtIndex = route.gpsData[index].time;
     return Math.abs(timeAtIndex - startTime);
+  }
+
+  createNewRoute(route: MadRoute) {
+    this.http.post('api/v1/routes', route, {
+        headers: new HttpHeaders().set('Content-Type', 'application/json')
+    }).subscribe(data => console.log(data));
   }
 }

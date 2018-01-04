@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { MadRoute } from './../domain/madroute';
+import { MadRouteService } from '../mad-route.service';
 
 @Component({
   selector: 'app-create-route',
@@ -8,9 +10,30 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class CreateRouteComponent implements OnInit {
 
-  constructor() { }
+  public madRoute: MadRoute;
+
+  constructor(private madRouteService: MadRouteService) { }
 
   ngOnInit() {
+    this.madRoute = new MadRoute();
   }
 
+  fileSelectedListener($event): void {
+    this.readThis($event.target);
+  }
+
+  readThis(inputValue: any): void {
+    const file: File = inputValue.files[0];
+    const myReader: FileReader = new FileReader();
+
+    myReader.onloadend = (e) => {
+      this.madRoute.base64GpsData = myReader.result.split(',').pop();
+    };
+
+    myReader.readAsDataURL(file);
+  }
+
+  createNewRoute() {
+    this.madRouteService.createNewRoute(this.madRoute);
+  }
 }

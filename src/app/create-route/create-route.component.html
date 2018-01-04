@@ -1,16 +1,26 @@
-<form class="uk-form">
+<form class="uk-form" #madRouteForm="ngForm">
 
   <fieldset data-uk-margin>
-      <legend>Hello Worlld</legend>
-      <input type="text" placeholder="">
-      <input type="password" placeholder="">
-      <input type="file" placeholder=""/>
-      <select>
-          <option>...</option>
-          <option>...</option>
-      </select>
-      <button class="uk-button">...</button>
-      <label><input type="checkbox"> ...</label>
+      <legend>Create new route</legend>
+      <div class="uk-form-row">
+        <input type="text" name="name" [(ngModel)]="madRoute.name" placeholder="Route name" required/>
+      </div>
+
+      <div class="uk-form-row">
+        <input type="text" name="location" [(ngModel)]="madRoute.location" placeholder="Location" required/>
+      </div>
+      <div class="uk-form-row">
+        <input type="file" (change)="fileSelectedListener($event)" required>
+      </div>
+      <div class="uk-form-row">
+        <textarea name="description" [(ngModel)]="madRoute.description" cols="60" rows="5" placeholder="Additional description" required></textarea>
+      </div>
+      <div class="uk-form-row">
+          <input type="submit" value="submit" (click)="createNewRoute()"/>
+      </div>
   </fieldset>
 
+  <div>
+    {{madRoute.toString()}}
+  </div>
 </form>
