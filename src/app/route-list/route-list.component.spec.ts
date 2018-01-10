@@ -1,14 +1,24 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouteListComponent } from './route-list.component';
+import { MadRouteService } from './../mad-route.service';
 
 describe('RouteListComponent', () => {
   let component: RouteListComponent;
   let fixture: ComponentFixture<RouteListComponent>;
 
+  const madRouteServiceStub = {
+    getMadRoutes: function() {},
+    getMadRouteById: function() {},
+    getRouteBoundingBox: function() {},
+    getOffsetFromBeginningByIndex: function() {},
+    createNewRoute: function() {},
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RouteListComponent ]
+      declarations: [ RouteListComponent ],
+      providers: [ {provide: MadRouteService, useValue: madRouteServiceStub }]
     })
     .compileComponents();
   }));
@@ -22,4 +32,5 @@ describe('RouteListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

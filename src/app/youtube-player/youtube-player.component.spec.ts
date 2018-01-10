@@ -22,4 +22,6 @@ describe('YoutubePlayerComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // TODO: Add test cases for no video id, invalid video id, also test events
 });
