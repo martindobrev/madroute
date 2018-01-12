@@ -2,6 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouteDetailComponent } from './route-detail.component';
 import { MadRouteService } from './../mad-route.service';
+import { YoutubePlayerComponent } from '../youtube-player/youtube-player.component';
+import { ActivatedMadRouteStub } from '../test/stub/madroute-stubs';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('RouteDetailComponent', () => {
   let component: RouteDetailComponent;
@@ -17,8 +21,12 @@ describe('RouteDetailComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RouteDetailComponent ],
-      providers: [ {provide: MadRouteService, useValue: madRouteServiceStub }]
+      imports: [ RouterTestingModule ],
+      declarations: [ RouteDetailComponent, YoutubePlayerComponent ],
+      providers: [
+        {provide: MadRouteService, useValue: madRouteServiceStub},
+        {provide: ActivatedRoute, useClass: ActivatedMadRouteStub}
+      ]
     })
     .compileComponents();
   }));
