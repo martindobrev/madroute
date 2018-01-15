@@ -2,13 +2,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RouteListComponent } from './route-list.component';
 import { MadRouteService } from './../mad-route.service';
+import { MadRoute } from './../domain/madroute';
+import { Observable } from 'rxjs/Observable';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 describe('RouteListComponent', () => {
   let component: RouteListComponent;
   let fixture: ComponentFixture<RouteListComponent>;
 
+  const madRoutes = new Array<MadRoute>();
+  madRoutes.push(new MadRoute());
+
   const madRouteServiceStub = {
-    getMadRoutes: function() {},
+    getMadRoutes: function() {
+      return new BehaviorSubject(madRoutes).asObservable();
+    },
     getMadRouteById: function() {},
     getRouteBoundingBox: function() {},
     getOffsetFromBeginningByIndex: function() {},
@@ -29,7 +37,7 @@ describe('RouteListComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
