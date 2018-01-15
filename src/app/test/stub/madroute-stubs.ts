@@ -1,5 +1,4 @@
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { convertToParamMap, ParamMap } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { MadRoute } from '../../domain/madroute';
 import { GpsPosition } from '../../domain/gpsposition';
@@ -7,7 +6,7 @@ import { GpsPosition } from '../../domain/gpsposition';
 @Injectable()
 export class ActivatedMadRouteStub {
 
-    private subject: BehaviorSubject<ParamMap>;
+    private subject: BehaviorSubject<any>;
 
     constructor() {
         const madRoute = new MadRoute();
@@ -25,7 +24,7 @@ export class ActivatedMadRouteStub {
             new GpsPosition(15, 57, 200, 10, 4000)
         ];
 
-        this.subject = new BehaviorSubject(convertToParamMap(madRoute));
+        this.subject = new BehaviorSubject({madRoute: madRoute});
     }
 
     get data() {

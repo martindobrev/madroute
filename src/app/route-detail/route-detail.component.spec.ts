@@ -6,6 +6,7 @@ import { YoutubePlayerComponent } from '../youtube-player/youtube-player.compone
 import { ActivatedMadRouteStub } from '../test/stub/madroute-stubs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { BBox } from './../domain/bbox';
 
 describe('RouteDetailComponent', () => {
   let component: RouteDetailComponent;
@@ -14,7 +15,9 @@ describe('RouteDetailComponent', () => {
   const madRouteServiceStub = {
     getMadRoutes: function() {},
     getMadRouteById: function() {},
-    getRouteBoundingBox: function() {},
+    getRouteBoundingBox: function() {
+      return new BBox(10, 10, 20, 20);
+    },
     getOffsetFromBeginningByIndex: function() {},
     createNewRoute: function() {},
   };
