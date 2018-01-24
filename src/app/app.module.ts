@@ -14,6 +14,7 @@ import { AboutComponent } from './about/about.component';
 import { RouteListComponent } from './route-list/route-list.component';
 import { MadRouteResolver } from './resolvers/mad-route.resolver.service';
 import { CreateRouteComponent } from './create-route/create-route.component';
+import { MapComponent } from './map/map.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { CreateRouteComponent } from './create-route/create-route.component';
     YoutubePlayerComponent,
     AboutComponent,
     RouteListComponent,
-    CreateRouteComponent
+    CreateRouteComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
