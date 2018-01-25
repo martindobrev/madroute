@@ -27,12 +27,16 @@ export class MapComponent implements OnInit, AfterViewInit {
   private currentPositionFeature: any;
   private currentPositionIndex = 0;
   private currentPositionStyle: any;
+  private autoCenterMap = false;
 
   constructor(private madRouteService: MadRouteService, private navigationService: MadRouteNavigationService) {
     navigationService.timeOffset$.subscribe(timeOffset => {
       this.currentPositionIndex = timeOffset;
       if (this.currentPositionIndex < this.olCoordinates.length) {
         this.currentPositionFeature.getGeometry().setCoordinates(this.olCoordinates[this.currentPositionIndex]);
+        if (this.autoCenterMap) {
+          this.view.setCenter(this.olCoordinates[this.currentPositionIndex]);
+        }
       }
     });
   }
@@ -116,10 +120,19 @@ export class MapComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.map.setTarget(this.mapElement.nativeElement.id);
+    this.centerMadRoute();
+  }
+
+  public centerMadRoute() {
     if (this.initialBbox) {
       const boundingExtent = ol.proj.transformExtent(this.initialBbox.toExtent(), ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
       this.view.fit(boundingExtent, this.map.getSize());
     }
+  }
+
+  public toggleAutoCenter() {
+    this.autoCenterMap = !this.autoCenterMap;
+    console.log('Toggle autocenter ' + this.autoCenterMap);
   }
 
   private transformRouteCoordinates(route: MadRoute): Array<Array<number>> {
