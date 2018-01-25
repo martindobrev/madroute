@@ -1,26 +1,30 @@
-import { Component, Input, Output, OnChanges, SimpleChange, OnInit, AfterViewInit,
+import { Component, Input, Output, SimpleChange, OnInit, AfterViewInit,
   ViewChild, ElementRef, ChangeDetectorRef, EventEmitter } from '@angular/core';
+import { MadRouteNavigationService } from '../mad-route-navigation.service';
 
 @Component({
   selector: 'app-youtube-player',
   templateUrl: './youtube-player.component.html',
   styleUrls: ['./youtube-player.component.css']
 })
-export class YoutubePlayerComponent implements OnInit, AfterViewInit, OnChanges {
+export class YoutubePlayerComponent implements OnInit, AfterViewInit {
 
   @ViewChild('player') playerElement: ElementRef;
   @Input() videoId: string;
-  @Input() videoPosition: number;
-  @Output() onPlayerTimeChange = new EventEmitter<number>();
 
   player: any;
   videoIsPlaying: false;
   duration: number;
   timer: number;
+  private timeOffset = 0;
 
-  currentPlayerTime = 0;
-
-  constructor(private ref: ChangeDetectorRef) { }
+  constructor(private ref: ChangeDetectorRef, private navigationService: MadRouteNavigationService) {
+    this.navigationService.timeOffset$.subscribe(timeOffset => {
+      console.log('CHANGING OFFSET');
+      this.timeOffset = timeOffset;
+      this.seekTo(this.timeOffset);
+    });
+  }
 
   ngOnInit() {
     (<any>window).onYouTubeIframeAPIReady = () => {
@@ -64,20 +68,6 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit, OnChanges 
     };
   }
 
-  ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
-    console.log('ON CHANGES');
-    if (changes['videoPosition']) {
-      const newVideoPosition = changes['videoPosition'];
-      if (!newVideoPosition.isFirstChange()) {
-        this.stopVideo();
-        if (newVideoPosition.currentValue !== this.currentPlayerTime) {
-          this.currentPlayerTime = newVideoPosition.currentValue;
-          this.seekTo(this.currentPlayerTime);
-        }
-      }
-    }
-  }
-
   ngAfterViewInit() {
     const doc = (<any>window).document;
     const playerApiScript = doc.createElement('script');
@@ -104,9 +94,8 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit, OnChanges 
 
   startTimer() {
     this.timer = window.setInterval(() => {
-      this.currentPlayerTime++;
-      this.onPlayerTimeChange.emit(this.currentPlayerTime);
-      this.ref.detectChanges();
+      this.timeOffset++;
+      this.navigationService.changeTimeOffset(this.timeOffset);
     }, 1000);
   }
 
@@ -116,12 +105,10 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit, OnChanges 
   }
 
   syncTime() {
-    const oldPlayerTime = this.currentPlayerTime;
-    this.currentPlayerTime = Math.floor(this.player.getCurrentTime());
-    if (this.currentPlayerTime !== oldPlayerTime) {
-      this.onPlayerTimeChange.emit(this.currentPlayerTime);
-      this.ref.detectChanges();
+    const oldPlayerTime = this.timeOffset;
+    this.timeOffset = Math.floor(this.player.getCurrentTime());
+    if (this.timeOffset !== oldPlayerTime) {
+      this.navigationService.changeTimeOffset(this.timeOffset);
     }
   }
-
 }

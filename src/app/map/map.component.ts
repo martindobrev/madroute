@@ -3,6 +3,7 @@ import { MadRoute } from './../domain/madroute';
 import { MadRouteService } from './../mad-route.service';
 import { BBox } from '../domain/bbox';
 import { GpsPosition } from '../domain/gpsposition';
+import { MadRouteNavigationService } from '../mad-route-navigation.service';
 
 declare var ol: any;
 
@@ -27,11 +28,16 @@ export class MapComponent implements OnInit, AfterViewInit {
   private currentPositionIndex = 0;
   private currentPositionStyle: any;
 
-  constructor(private madRouteService: MadRouteService) {}
+  constructor(private madRouteService: MadRouteService, private navigationService: MadRouteNavigationService) {
+    navigationService.timeOffset$.subscribe(timeOffset => {
+      this.currentPositionIndex = timeOffset;
+      if (this.currentPositionIndex < this.olCoordinates.length) {
+        this.currentPositionFeature.getGeometry().setCoordinates(this.olCoordinates[this.currentPositionIndex]);
+      }
+    });
+  }
 
   ngOnInit() {
-    this.olCoordinates = this.transformRouteCoordinates(this.madRoute);
-    this.initialBbox = this.madRouteService.getRouteBoundingBox(this.madRoute);
     this.backgroundVectorSource = new ol.source.Vector({});
     this.foregroundVectorSource = new ol.source.Vector({});
 
@@ -84,45 +90,46 @@ export class MapComponent implements OnInit, AfterViewInit {
       view: this.view
     });
 
-    this.currentPositionFeature = new ol.Feature(new ol.geom.Point(this.olCoordinates[0]));
-    this.currentPositionFeature.setStyle(this.currentPositionStyle);
-    this.foregroundVectorSource.addFeature(this.currentPositionFeature);
-
-    this.currentPositionFeature = new ol.Feature(new ol.geom.Point(this.olCoordinates[0]));
-    this.currentPositionFeature.setStyle(this.currentPositionStyle);
-    this.foregroundVectorSource.addFeature(this.currentPositionFeature);
-
-    this.addRouteLine(this.madRoute.gpsData);
-    this.olCoordinates.forEach((olCoordinate, index) => {
-      this.addOlPoint(olCoordinate, index);
-    });
-
-    this.map.on('click', (evt) => {
-      const coordinates = evt.coordinate;
-      const feature = evt.target.forEachFeatureAtPixel(evt.pixel, function(featureClicked) {
-        return featureClicked;
+    if (this.madRoute) {
+      this.olCoordinates = this.transformRouteCoordinates(this.madRoute);
+      this.initialBbox = this.madRouteService.getRouteBoundingBox(this.madRoute);
+      this.currentPositionFeature = new ol.Feature(new ol.geom.Point(this.olCoordinates[0]));
+      // this.currentPositionFeature.setStyle(this.currentPositionStyle);
+      this.foregroundVectorSource.addFeature(this.currentPositionFeature);
+      this.addRouteLine(this.madRoute.gpsData);
+      this.olCoordinates.forEach((olCoordinate, index) => {
+        this.addOlPoint(olCoordinate, index);
       });
 
-      if (feature.index) {
-        this.currentPositionIndex = feature.index;
-        console.log('CHANGING CURRENT POSITION INDEX TO: ', this.currentPositionIndex);
-        console.log(this.madRouteService.getOffsetFromBeginningByIndex(this.madRoute, feature.index));
-      }
-    });
+      this.map.on('click', (evt) => {
+        const coordinates = evt.coordinate;
+        const feature = evt.target.forEachFeatureAtPixel(evt.pixel, function(featureClicked) {
+          return featureClicked;
+        });
+
+        if (feature.index) {
+          this.navigationService.changeTimeOffset(feature.index);
+        }
+      });
+    }
   }
 
   ngAfterViewInit() {
     this.map.setTarget(this.mapElement.nativeElement.id);
-    const boundingExtent = ol.proj.transformExtent(this.initialBbox.toExtent(), ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
-    this.view.fit(boundingExtent, this.map.getSize());
+    if (this.initialBbox) {
+      const boundingExtent = ol.proj.transformExtent(this.initialBbox.toExtent(), ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857'));
+      this.view.fit(boundingExtent, this.map.getSize());
+    }
   }
 
   private transformRouteCoordinates(route: MadRoute): Array<Array<number>> {
     const transformedPositions = [];
-    route.gpsData.forEach(gpsPosition => {
-      transformedPositions.push(
-        ol.proj.transform([gpsPosition.longitude, gpsPosition.latitude], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
-    });
+    if (route) {
+      route.gpsData.forEach(gpsPosition => {
+        transformedPositions.push(
+          ol.proj.transform([gpsPosition.longitude, gpsPosition.latitude], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
+      });
+    }
     return transformedPositions;
   }
 
@@ -147,11 +154,5 @@ export class MapComponent implements OnInit, AfterViewInit {
         ol.proj.transform([gpsPosition.longitude, gpsPosition.latitude], ol.proj.get('EPSG:4326'), ol.proj.get('EPSG:3857')));
     });
     this.backgroundVectorSource.addFeature(new ol.Feature(new ol.geom.MultiLineString(transformedPositions)));
-  }
-
-  onPlayerTimeChanged(index: number) {
-    if (index < this.olCoordinates.length) {
-      this.currentPositionFeature.getGeometry().setCoordinates(this.olCoordinates[index]);
-    }
   }
 }

@@ -7,6 +7,7 @@ import { ActivatedMadRouteStub } from '../test/stub/madroute-stubs';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BBox } from './../domain/bbox';
+import { MapComponent } from '../map/map.component';
 
 describe('RouteDetailComponent', () => {
   let component: RouteDetailComponent;
@@ -25,7 +26,7 @@ describe('RouteDetailComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule ],
-      declarations: [ RouteDetailComponent, YoutubePlayerComponent ],
+      declarations: [ RouteDetailComponent, YoutubePlayerComponent, MapComponent ],
       providers: [
         {provide: MadRouteService, useValue: madRouteServiceStub},
         {provide: ActivatedRoute, useClass: ActivatedMadRouteStub}

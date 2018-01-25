@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { RouteDetailComponent } from './route-detail/route-detail.component';
 
 import { MadRouteService } from './mad-route.service';
+import { MadRouteNavigationService } from './mad-route-navigation.service';
 import { YoutubePlayerComponent } from './youtube-player/youtube-player.component';
 import { AboutComponent } from './about/about.component';
 import { RouteListComponent } from './route-list/route-list.component';
@@ -34,7 +35,7 @@ import { MapComponent } from './map/map.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [MadRouteService, MadRouteResolver],
+  providers: [MadRouteService, MadRouteNavigationService, MadRouteResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
