@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { Subject } from 'rxjs/Subject';
 import { RouteDetailComponent } from './route-detail.component';
 import { MadRouteService } from './../mad-route.service';
 import { YoutubePlayerComponent } from '../youtube-player/youtube-player.component';
@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BBox } from './../domain/bbox';
 import { MapComponent } from '../map/map.component';
+import { MadRouteNavigationService } from '../mad-route-navigation.service';
 
 describe('RouteDetailComponent', () => {
   let component: RouteDetailComponent;
@@ -23,13 +24,19 @@ describe('RouteDetailComponent', () => {
     createNewRoute: function() {},
   };
 
+  const madRouteNavigationServiceStub = {
+    timeOffset$ : new Subject<number>().asObservable(),
+    changeTimeOffset: function(timeOffset: number) {}
+  };
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [ RouterTestingModule ],
       declarations: [ RouteDetailComponent, YoutubePlayerComponent, MapComponent ],
       providers: [
         {provide: MadRouteService, useValue: madRouteServiceStub},
-        {provide: ActivatedRoute, useClass: ActivatedMadRouteStub}
+        {provide: ActivatedRoute, useClass: ActivatedMadRouteStub},
+        {provide: MadRouteNavigationService, useValue: madRouteNavigationServiceStub}
       ]
     })
     .compileComponents();

@@ -15,6 +15,7 @@ declare var ol: any;
 })
 export class MapComponent implements OnInit, AfterViewInit {
 
+
   @ViewChild('map') mapElement: ElementRef;
   @Input() madRoute: MadRoute;
 
@@ -25,13 +26,13 @@ export class MapComponent implements OnInit, AfterViewInit {
   private map: any;
   private view: any;
   private currentPositionFeature: any;
-  private currentPositionIndex = 0;
+  currentPositionIndex = 0;
   private currentPositionStyle: any;
   private autoCenterMap = false;
 
   constructor(private madRouteService: MadRouteService, private navigationService: MadRouteNavigationService) {
     navigationService.timeOffset$.subscribe(timeOffset => {
-      this.currentPositionIndex = timeOffset;
+      this.currentPositionIndex = this.positionIndexFromTimeOffset(timeOffset);
       if (this.currentPositionIndex < this.olCoordinates.length) {
         this.currentPositionFeature.getGeometry().setCoordinates(this.olCoordinates[this.currentPositionIndex]);
         if (this.autoCenterMap) {
@@ -146,6 +147,13 @@ export class MapComponent implements OnInit, AfterViewInit {
     return transformedPositions;
   }
 
+  private positionIndexFromTimeOffset(timeOffset: number): number {
+    this.madRoute.offset = -180;
+    if (timeOffset + this.madRoute.offset < 0) {
+      return 0;
+    }
+    return timeOffset + this.madRoute.offset;
+  }
 
   private addRoutePoint(gpsPosition: GpsPosition) {
     const transformedPosition = ol.proj.transform(

@@ -10,6 +10,7 @@ export class MadRoute {
     duration: number;
     distance: number;
     base64GpsData: string;
+    offset = 0;
 
     public toString = (): string => {
         return `MadRoute (id: ${this.id}, name: ${this.name}, location: ${this.location}, description: ${this.description},

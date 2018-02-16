@@ -19,5 +19,4 @@ describe('MadRouteService', () => {
   it('should be created', inject([MadRouteService], (service: MadRouteService) => {
     expect(service).toBeTruthy();
   }));
-  
 });

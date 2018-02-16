@@ -42,8 +42,8 @@ export class MadRouteService {
   }
 
   getOffsetFromBeginningByIndex(route: MadRoute, index: number): number {
-    const startTime = route.gpsData[0].time;
-    const timeAtIndex = route.gpsData[index].time;
+    const startTime = route.gpsData[0].timestamp;
+    const timeAtIndex = route.gpsData[index].timestamp;
     return Math.abs(timeAtIndex - startTime);
   }
 
