@@ -7,6 +7,7 @@ export class MadRouteNavigationService {
   timeOffset$ = this.timeOffsetSource.asObservable();
 
   public changeTimeOffset(timeOffset: number) {
+    console.log('Changing time offset to: ' + timeOffset);
     this.timeOffsetSource.next(timeOffset);
   }
 }

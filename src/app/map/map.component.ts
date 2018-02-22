@@ -33,6 +33,7 @@ export class MapComponent implements OnInit, AfterViewInit {
   constructor(private madRouteService: MadRouteService, private navigationService: MadRouteNavigationService) {
     navigationService.timeOffset$.subscribe(timeOffset => {
       this.currentPositionIndex = this.positionIndexFromTimeOffset(timeOffset);
+      console.log('Time offset changed - trying to change position index to: ' + this.currentPositionIndex);
       if (this.currentPositionIndex < this.olCoordinates.length) {
         this.currentPositionFeature.getGeometry().setCoordinates(this.olCoordinates[this.currentPositionIndex]);
         if (this.autoCenterMap) {
@@ -148,11 +149,16 @@ export class MapComponent implements OnInit, AfterViewInit {
   }
 
   private positionIndexFromTimeOffset(timeOffset: number): number {
-    this.madRoute.offset = -180;
-    if (timeOffset + this.madRoute.offset < 0) {
+    // this.madRoute.offset = -180;
+    // if (timeOffset + this.madRoute.offset < 0) {
+    //  return 0;
+    // }
+    const finalTimeOffset = timeOffset + 15;
+    console.log(`timeOffset: ${timeOffset}, finalTimeOffset: ${finalTimeOffset}`);
+    if (finalTimeOffset < 0) {
       return 0;
     }
-    return timeOffset + this.madRoute.offset;
+    return finalTimeOffset;
   }
 
   private addRoutePoint(gpsPosition: GpsPosition) {

@@ -18,10 +18,10 @@ export class ActivatedMadRouteStub {
         madRoute.description = 'HELLO FROM TESTLAND';
         madRoute.videoId = 'NON-EXISTING-VIDEO';
         madRoute.gpsData = [
-            new GpsPosition(13, 56, 200, 10, 1000),
-            new GpsPosition(14, 57, 200, 10, 2000),
-            new GpsPosition(15, 56, 200, 10, 3000),
-            new GpsPosition(15, 57, 200, 10, 4000)
+            new GpsPosition(13, 56, 200, 10, 1000, false),
+            new GpsPosition(14, 57, 200, 10, 2000, false),
+            new GpsPosition(15, 56, 200, 10, 3000, false),
+            new GpsPosition(15, 57, 200, 10, 4000, false)
         ];
 
         this.subject = new BehaviorSubject({madRoute: madRoute});

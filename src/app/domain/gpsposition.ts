@@ -3,5 +3,6 @@ export class GpsPosition {
                , public longitude: number
                , public altitude: number
                , public velocity: number
-               , public timestamp: number) {}
+               , public timestamp: number
+               , public generated: boolean) {}
 }

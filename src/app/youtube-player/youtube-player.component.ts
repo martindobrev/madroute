@@ -20,9 +20,11 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit {
 
   constructor(private ref: ChangeDetectorRef, private navigationService: MadRouteNavigationService) {
     this.navigationService.timeOffset$.subscribe(timeOffset => {
-      console.log('CHANGING OFFSET');
-      this.timeOffset = timeOffset;
-      this.seekTo(this.timeOffset);
+      if (timeOffset !== this.timeOffset) {
+        console.log('CHANGING OFFSET');
+        this.timeOffset = timeOffset;
+        this.seekTo(this.timeOffset);
+      }
     });
   }
 

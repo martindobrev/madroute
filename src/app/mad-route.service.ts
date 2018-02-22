@@ -4,7 +4,6 @@ import { HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { MadRoute } from './domain/madroute';
-import { MAD_ROUTES } from './mock/madroutes';
 import { BBox } from './domain/bbox';
 import { MadRouteCollectionResponse } from './api/mad-route-collection-response';
 
@@ -39,12 +38,6 @@ export class MadRouteService {
       }
     });
     return bbox;
-  }
-
-  getOffsetFromBeginningByIndex(route: MadRoute, index: number): number {
-    const startTime = route.gpsData[0].timestamp;
-    const timeAtIndex = route.gpsData[index].timestamp;
-    return Math.abs(timeAtIndex - startTime);
   }
 
   createNewRoute(route: MadRoute) {
