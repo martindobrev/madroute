@@ -20,13 +20,13 @@
       "prefix": "app",
       "styles": [
         "styles.css",
-        "./../node_modules/uikit/dist/css/uikit.css",
-        "./../node_modules/openlayers/dist/ol.css"
+        "assets/ol/ol.css",
+        "./../node_modules/uikit/dist/css/uikit.css"
       ],
       "scripts": [
         "./../node_modules/jquery/dist/jquery.js",
         "./../node_modules/uikit/dist/js/uikit.js",
-        "./../node_modules/openlayers/dist/ol.js"
+        "assets/ol/ol.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
