@@ -1,7 +1,5 @@
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/take';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Router, Resolve, RouterStateSnapshot,
          ActivatedRouteSnapshot } from '@angular/router';
 
@@ -15,9 +13,6 @@ export class MadRouteResolver implements Resolve<MadRoute> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<MadRoute> {
     const id = +route.paramMap.get('id');
     console.log('RESOLVING route with id ' + id);
-    return this.madRouteService.getMadRouteById(id).take(1).map(madRoute => {
-      console.log('Returning madroute: ' + madRoute.toString());
-      return madRoute;
-    });
+    return this.madRouteService.getMadRouteById(id);
   }
 }

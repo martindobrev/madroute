@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { MadRoute } from '../../domain/madroute';
 import { GpsPosition } from '../../domain/gpsposition';

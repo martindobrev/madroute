@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
-import { of } from 'rxjs/observable/of';
+import { Observable ,  of } from 'rxjs';
 import { MadRoute } from './domain/madroute';
 import { BBox } from './domain/bbox';
 import { MadRouteCollectionResponse } from './api/mad-route-collection-response';

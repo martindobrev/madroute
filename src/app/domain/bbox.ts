@@ -6,7 +6,7 @@ export class BBox {
         public maxLon: number
     ) {}
 
-    public toExtent(): [number] {
+    public toExtent(): Array<number> {
         return [this.minLon, this.minLat, this.maxLon, this.maxLat];
     }
 }

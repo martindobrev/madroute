@@ -153,7 +153,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     // if (timeOffset + this.madRoute.offset < 0) {
     //  return 0;
     // }
-    const finalTimeOffset = timeOffset + 15;
+    const finalTimeOffset = timeOffset - 15;
     console.log(`timeOffset: ${timeOffset}, finalTimeOffset: ${finalTimeOffset}`);
     if (finalTimeOffset < 0) {
       return 0;
