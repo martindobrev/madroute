@@ -24,16 +24,11 @@ export class CreateRouteComponent implements OnInit {
 
   readThis(inputValue: any): void {
     const file: File = inputValue.files[0];
-    const myReader: FileReader = new FileReader();
-
-    myReader.onloadend = (e) => {
-      this.madRoute.base64GpsData = myReader.result.split(',').pop();
-    };
-
-    myReader.readAsDataURL(file);
+    this.madRoute.file = file;
   }
 
   createNewRoute() {
+    console.log('creating new route...');
     this.madRouteService.createNewRoute(this.madRoute);
   }
 }

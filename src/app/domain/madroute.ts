@@ -10,6 +10,7 @@ export class MadRoute {
     duration: number;
     distance: number;
     base64GpsData: string;
+    file?: File;
     offset = 0;
 
     public toString = (): string => {

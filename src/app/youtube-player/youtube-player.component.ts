@@ -31,8 +31,8 @@ export class YoutubePlayerComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     (<any>window).onYouTubeIframeAPIReady = () => {
       this.player = new (<any>window).YT.Player('player', {
-        height: '240px',
-        width: '320px',
+        height: '480px',
+        width: '640px',
         videoId: this.videoId,
         playerVars: {'autoplay': 0, 'rel': 0, 'controls': 2},
         events: {

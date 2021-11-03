@@ -40,8 +40,11 @@ export class MadRouteService {
   }
 
   createNewRoute(route: MadRoute) {
-    this.http.post('api/v1/routes', route, {
-        headers: new HttpHeaders().set('Content-Type', 'application/json')
-    }).subscribe(data => console.log(data));
+    const formData = new FormData();
+  
+    formData.append('file', route.file);
+    formData.append('name', route.name);
+    formData.append('location', route.location);
+    this.http.post('api/v1/routes', formData, { reportProgress: true}).subscribe(data => console.log(data));
   }
 }

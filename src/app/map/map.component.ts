@@ -29,10 +29,11 @@ export class MapComponent implements OnInit, AfterViewInit {
   currentPositionIndex = 0;
   private currentPositionStyle: any;
   private autoCenterMap = false;
+  private videoOffset = +30;
 
   constructor(private madRouteService: MadRouteService, private navigationService: MadRouteNavigationService) {
     navigationService.timeOffset$.subscribe(timeOffset => {
-      this.currentPositionIndex = this.positionIndexFromTimeOffset(timeOffset);
+      this.currentPositionIndex = this.positionIndexFromTimeOffset(timeOffset) + this.videoOffset;
       console.log('Time offset changed - trying to change position index to: ' + this.currentPositionIndex);
       if (this.currentPositionIndex < this.olCoordinates.length) {
         this.currentPositionFeature.getGeometry().setCoordinates(this.olCoordinates[this.currentPositionIndex]);
@@ -114,7 +115,7 @@ export class MapComponent implements OnInit, AfterViewInit {
         });
 
         if (feature.index) {
-          this.navigationService.changeTimeOffset(feature.index);
+          this.navigationService.changeTimeOffset(feature.index - this.videoOffset);
         }
       });
     }
@@ -153,7 +154,7 @@ export class MapComponent implements OnInit, AfterViewInit {
     // if (timeOffset + this.madRoute.offset < 0) {
     //  return 0;
     // }
-    const finalTimeOffset = timeOffset - 15;
+    const finalTimeOffset = timeOffset;
     console.log(`timeOffset: ${timeOffset}, finalTimeOffset: ${finalTimeOffset}`);
     if (finalTimeOffset < 0) {
       return 0;
