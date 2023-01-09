@@ -1,0 +1,1 @@
+{"ast":null,"code":"export class BBox {\n  constructor(minLat, minLon, maxLat, maxLon) {\n    this.minLat = minLat;\n    this.minLon = minLon;\n    this.maxLat = maxLat;\n    this.maxLon = maxLon;\n  }\n  toExtent() {\n    return [this.minLon, this.minLat, this.maxLon, this.maxLat];\n  }\n}","map":null,"metadata":{},"sourceType":"module","externalDependencies":[]}
