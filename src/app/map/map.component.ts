@@ -16,7 +16,7 @@ declare var ol: any;
 export class MapComponent implements OnInit, AfterViewInit {
 
 
-  @ViewChild('map') mapElement: ElementRef;
+  @ViewChild('map', { static: true }) mapElement: ElementRef;
   @Input() madRoute: MadRoute;
 
   private olCoordinates: Array<Array<number>> = [];

@@ -9,7 +9,7 @@ import { MadRouteNavigationService } from '../mad-route-navigation.service';
 })
 export class YoutubePlayerComponent implements OnInit, AfterViewInit {
 
-  @ViewChild('player') playerElement: ElementRef;
+  @ViewChild('player', { static: true }) playerElement: ElementRef;
   @Input() videoId: string;
 
   player: any;
